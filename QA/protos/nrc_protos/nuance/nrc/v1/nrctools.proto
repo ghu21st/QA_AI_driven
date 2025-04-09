@@ -1,0 +1,143 @@
+//  Copyright (C) 2018 - 2022 Nuance Communications, Inc. All Rights Reserved.
+//
+//  The copyright to the computer program(s) herein is the property of
+//  Nuance Communications, Inc. The program(s) may be used and/or copied
+//  only with the written permission from Nuance Communications, Inc.
+//  or in accordance with the terms and conditions stipulated in the
+//  agreement/contract under which the program(s) have been supplied.
+
+syntax = "proto3";
+
+package nuance.nrc.v1;
+
+option java_multiple_files = true;
+option java_package = "com.nuance.nrc.v1";
+option java_outer_classname = "RecognizerToolsProto";
+option objc_class_prefix = "RecognizerToolsProto";
+
+// Streaming API to access Nuance Recognizer tools.
+// For more information on the utilities and options, see the Reference section
+// in the Nuance Speech Suite documentation.  
+service RecognizerTools {  
+  // Invokes the parseTool utility to test sentences against a grammar. 
+  rpc Parse (stream ParseRequest) returns (stream ToolsResponse);
+
+  // Invokes the sgc utility to compile a grammar.  
+  rpc Sgc (stream SgcRequest) returns (stream ToolsResponse);
+
+  // Invokes the dicttest utility to perform a non-interactive test to check
+  // pronunciations against words or phrases provided in an input file.
+  rpc DictTest(stream DictTestRequest) returns (stream ToolsResponse);
+
+  // Invokde the test_parser utility to perform interpretation tests on grammars by comparing 
+  // the correct key/value pairs that get passed to Recognizer with those actually generated.
+  rpc TestParser(stream TestParserRequest) returns (stream ToolsResponse);
+}
+
+// Input stream message that contains the parsetool arguments.
+// Used for invoking parseTool. The zip file must contain the grammar, the input
+// text file for computing perplexity if the option -perplexity is specified,
+// and the test file if the option -test_file is specified.
+// Included in [RecognizerTools] (#RecognizerTools).
+message ParseRequest {
+  oneof request_data {
+    FileChunk chunk = 1;         // Mandatory. Streamed chunk of the zip file containing all input files for the command.       
+    ParseArguments args = 2;     // Mandatory. Arguments for the command.         
+  }
+}
+
+// Input stream message that contains the parsetool arguments.
+// Used for invoking sgc; the zip file must include the grammar to be compiled.
+// Included in [RecognizerTools] (#RecognizerTools).
+message SgcRequest {
+  oneof request_data {
+    FileChunk chunk = 1;         // Mandatory. Streamed chunk of the zip file containing all input files for the command.       
+    SgcArguments args = 2;       // Mandatory. Arguments for the command.         
+  }
+}
+
+// Input stream message that contains the parsetool arguments.
+// Used for invoking dicttest; the zip file must contain the dictionary file
+// that lists the test words and phrases to test.   
+// Included in [RecognizerTools] (#RecognizerTools).
+message DictTestRequest {
+  oneof request_data {
+    FileChunk chunk = 1;         // Mandatory. Streamed chunk of the zip file containing all input files for the command.       
+    DictTestArguments args = 2;  // Mandatory. Arguments for the command.         
+  }
+}
+
+// Input stream message that contains the test_parser arguments.
+// Used for invoking test_parser; the zip file must contain the test file in which each line lists
+// the grammar to be tested, the text to be recognized, the name of the key to be compared, and the
+// expected value returned for that key, along with any local grammars specified in the test file.   
+// Included in [RecognizerTools] (#RecognizerTools).
+message TestParserRequest {
+  oneof request_data {
+    FileChunk chunk = 1;         // Mandatory. Streamed chunk of the zip file containing all input files for the command.
+    TestParserArguments args = 2;// Mandatory. Arguments for the command.
+  }
+}
+
+// Output stream message that contains tool execution output.
+// The output zip file contains the console output as a result of executing the
+// tool command, as well as any output from invoking the command. The output zip
+// file for dicttest contains the console output from executing the command. For
+// sgc, the output zip file contains the compiled grammar and the screen output.
+// For parseTool, the output zip file contains the parseTool screen output and
+// contains the parser files if the option -dump_parser is specified. 
+// Included in [RecognizerTools] (#RecognizerTools).
+message ToolsResponse {
+  oneof response_data { 
+    FileChunk chunk = 1;         // Streamed chunk of the zip file containing tool output data.      
+    ToolsOutput output = 2;      // Screen output produced as a result of invoking the command, but returned as a string for viewing purpose.
+  }
+}
+
+// parseTool execution arguments and flags.
+// Specify parseTool grammar and options as required. For example, -g_s invokes
+// parseTool to generate sentences using the provided grammar.
+// Included in [ParseRequest] (#ParseRequest).
+message ParseArguments {
+  string grammar = 1;            // Mandatory. The grammar used to run parseTool.
+  string args = 2;               // Mandatory. parseTool command options and arguments.
+}
+
+// sgc execution arguments and flags.
+// Specify grammar, options and flags as required.
+// Included in [SgcRequest] (#SgcRequest).
+message SgcArguments {
+  string grammar = 1;            // Mandatory. The grammar to be compiled.
+  string args = 2;               // Mandatory. sgc command options and arguments.
+}
+
+// dicttest execution arguments and flags.
+// Specify a test file as an input that contains a list of test words and
+// phrases, one test word or phrase per line, by using the option -input
+// <inputfile>. Interactive mode is not supported. 
+// Included in [DictTestRequest] (#DictTestRequest).
+message DictTestArguments {
+  string args = 1;               // Mandatory. dicttest command options and arguments.
+}
+
+// test_parser execution arguments and flags.
+// Specify a test file as input that contains lines with the grammar to be tested, the text to
+// be recognized, the name of the key to be compared, and the expected value returned for that key
+// Included in [TestParserRequest] (#TestParserRequest)
+message TestParserArguments {
+  string test_file = 1;          // Mandatory. TestParser test file name.
+  string args = 2;               // Mandatory. dicttest command options and arguments.
+}
+
+// Chunk of data from file being streamed.
+// Included in [ParseRequest] (#ParseRequest), [SgcRequest] (#SgcRequest),
+// [DictTestRequest] (DictTestRequest), [ToolsResponse] (#ToolsResponse).
+message FileChunk {
+  bytes data = 1;                // A section of a zipped data file sent in the response stream.
+}
+
+// Tool execution console output string.
+// Included in [ToolsResponse] (#ToolsResponse).
+message ToolsOutput {
+  string outstr = 1;             // Output displayed on screen upon executing tool command.
+}

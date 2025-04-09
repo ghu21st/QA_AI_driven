@@ -1,0 +1,326 @@
+//  Copyright (C) 2018 - 2022 Nuance Communications, Inc. All Rights Reserved.
+//
+//  The copyright to the computer program(s) herein is the property of
+//  Nuance Communications, Inc. The program(s) may be used and/or copied
+//  only with the written permission from Nuance Communications, Inc.
+//  or in accordance with the terms and conditions stipulated in the
+//  agreement/contract under which the program(s) have been supplied.
+
+syntax = "proto3";
+
+package nuance.nrc.v1;
+
+// This diagram shows the sequence of messages that are sent and
+// received in a typical Recognize or DTMFRecognize call.
+//
+// Recognize:
+//
+//    Client                                           NRC
+//      |                                               |
+//      |-RecognitionInit------------------------------>|
+//      |<------------------------------Status/code:200-|
+//      |-audio---------------------------------------->|
+//      |-audio---------------------------------------->|
+//  (1) |-Control/start_timers------------------------->|
+//      |-audio---------------------------------------->|
+//      |<--------------------------------StartOfSpeech-|
+//      |-audio---------------------------------------->|
+//      |-audio---------------------------------------->|
+//      |-audio---------------------------------------->|
+//  (2) |<----------------------------------EndOfSpeech-|
+//      |<---------------------------------------Result-|
+//      |                                               |
+//
+// DTMFRecognize:
+//
+//    Client                                           NRC
+//      |                                               |
+//      |-DTMFRecognitionInit-------------------------->|
+//      |<------------------------------Status/code:200-|
+//      |-dtmf----------------------------------------->|
+//  (1) |-Control/start_timers------------------------->|
+//      |<--------------------------------StartOfSpeech-|
+//      |-dtmf----------------------------------------->|
+//      |-dtmf----------------------------------------->|
+//      |-dtmf----------------------------------------->|
+//  (3) |-dtmf_term_char------------------------------->|
+//      |<---------------------------------------Result-|
+//      |                                               |
+//
+// Notes:
+// (1) The Control message is optional and is only needed if the stall_timers
+//     parameter was set to true in the DTMF/RecognitionInit message.
+// (2) Once the EndOfSpeech message has been received, the Client should stop
+//     sending audio. Any further audio messages sent by the Client will be
+//     ignored by the recognizer.
+// (3) The Client sends the dtmf_term_char (specified in the
+//     DTMFRecognitionParameters) to signal the end of DTMF input.
+//     Alternatively, the client can also end the outbound stream when it is
+//     done sending DTMFs.
+
+option java_multiple_files = true;
+option java_package = "com.nuance.nrc.v1";
+option java_outer_classname = "NRCProto";
+option objc_class_prefix = "NRCProto";
+
+// Streaming grammar-based recognition service API.
+service NRC {
+  // Performs speech recognition.
+  rpc Recognize (stream RecognitionRequest) returns (stream RecognitionResponse);
+
+  // Performs DTMF recognition.
+  rpc DTMFRecognize (stream DTMFRecognitionRequest) returns (stream RecognitionResponse);
+}
+
+// Input stream messages, sent one at a time in a specific order, to perform
+// speech recognition. The first mandatory message sends recognition parameters
+// and resources. The remaining messages send the audio to be recognized. When
+// the stall_timers recognition flag is set to true in the RecognitionInit
+// message, an optional Control message can be sent at any time after the
+// RecognitionInit to initiate the timing of timeout events.
+// Included in [NRC](#NRC) - Recognize service.
+message RecognitionRequest {
+  oneof request_union {
+    RecognitionInit recognition_init = 1;           // Mandatory. Required first message in the RPC input stream, sends parameters and resources for recognition.
+    Control control = 2;                            // Optional. Message used for timer control.
+    bytes audio = 3;                                // Audio samples in the selected encoding for recognition.
+  }
+}
+
+// Input stream messages, sent one at a time in a specific order, to perform
+// DTMF recognition. The first mandatory message sends recognition parameters
+// and resources. The remaining messages send the DTMFs to be recognized. When
+// the stall_timers recognition flag is set to true in the RecognitionInit
+// message, an optional Control message can be sent at any time after the
+// RecognitionInit to initiate the timing of timeout events.
+// Included in [NRC](#NRC) - DTMFRecognize service.
+message DTMFRecognitionRequest {
+  oneof request_union {
+    DTMFRecognitionInit recognition_init = 1;       // Mandatory. Required first message in the RPC input stream, sends parameters and resources for recognition.
+    Control control = 2;                            // Optional. Message used for timer control.
+    string dtmf = 3;                                // A DTMF char/string to add to the recognition.
+  }
+}
+
+// Mandatory. Input message that initiates a new recognition turn.
+// Included in [RecognitionRequest](#recognitionrequest).
+message RecognitionInit {
+  RecognitionParameters parameters = 1;             // Mandatory. Various endpointer and recognition parameters, recognition result format.
+  repeated RecognitionResource resources = 2;       // Mandatory. Repeated. Resources (grammars) to be used for the recognition.
+  map<string, string> client_data = 3;              // Repeated. Client-supplied event, key=value pairs to inject into the call log. Multiple key=value entries can be specified in the key=value string by separating them with a pipe character. Example: client_data["event"] = "key1=value1|key2=value2";
+  string user_id = 4;                               // A user identification to associate with the recognition.
+}
+
+// Mandatory. Input message that initiates a new DTMF recognition turn.
+// Included in [DTMFRecognitionRequest](#dtmfrecognitionrequest).
+message DTMFRecognitionInit {
+  DTMFRecognitionParameters parameters = 1;         // Mandatory. Various endpointer and recognition parameters, recognition result format.
+  repeated RecognitionResource resources = 2;       // Mandatory. Repeated. Resources (grammars) to be used for the recognition.
+  map<string, string> client_data = 3;              // Repeated. Client-supplied event, key=value pairs to inject into the call log. Multiple key=value entries can be specified in the key=value string by separating them with a pipe character. Example: client_data["event"] = "key1=value1|key2=value2";
+  string user_id = 4;                               // A user identification to associate with the recognition.
+}
+
+// Input message that defines parameters for the recognition process.
+// The AudioFormat parameter is required; all others are optional.
+// See [Defaults](#defaults) for a list of default values.
+// Included in [RecognitionInit](#recognitioninit).
+message RecognitionParameters {
+  AudioFormat audio_format = 1;                     // Mandatory. Audio codec type and sample rate.
+  RecognitionFlags recognition_flags = 2;           // Boolean recognition parameters.
+  oneof no_input_timeout {
+    int32 no_input_timeout_ms = 3;                  // Maximum silence, in ms, allowed while waiting for user input after recognition timers are started. Default is 7000 ms. A value of -1 means no timeout.
+  }
+  oneof complete_timeout {
+    int32 complete_timeout_ms = 4;                  // Specify the duration of silence, in ms, after a valid recognition has occurred that determines the caller has finished speaking. Default is 0 (timer disabled).
+  }
+  oneof incomplete_timeout {
+    int32 incomplete_timeout_ms = 5;                // Specify the duration of silence, in ms, after an utterance before concluding that the caller has finished speaking. Default is 1500 ms. A value of 0 disables the timer.
+  }
+  oneof max_speech_timeout {
+    int32 max_speech_timeout_ms = 6;                // Maximum duration, in ms, of an utterance collected from the user. Default is 22000 ms (22 seconds). A value of -1 means no timeout.
+  }	
+  oneof sensitivity_param {
+    float speech_detection_sensitivity = 7;         // A balance between detecting speech and noise (breathing, etc.), 0 to 1.0. 0 means ignore all noise, 1.0 means interpret all noise as speech. Default is 0.5.
+  }
+  oneof nbest_param {
+    int32 nbest = 8;                                // Maximum number of n-best hypotheses to return. Range is 0 to 999. Additional CPU cycles needed if > 5. Default is 2.
+  }
+  oneof confidence_param {
+    float confidence_level = 9;                     // When the score of the first n-best entry is less than the value of confidencelevel, the recognition will return a no-match. Range is 0 to 1.0. Default is 0 (all utterances accepted).
+  }
+  ResultFormat result_format = 10;                  // Specifies in what format the recognition result should be returned.
+  repeated string cookies = 11;                     // Repeated. Defines the HTTP cookies to be included when fetching a grammar resource using the Set-Cookie or Set-Cookie2 format. Format: "Set-Cookie:name=<cookie-name>;value=<cookie-value>;expires=<cookie-expiration>;...", "Set-Cookie2:name=<cookie-name>;value=<cookie-value>;expires=<cookie-expiration>;...". The name and value attributes are required. The remaining attributes are optional.
+  map<string, string> endpointer_parameters = 12;   // Repeated. Client-supplied key,value pairs representing parameters to set on the endpointer.
+  map<string, string> recognizer_parameters = 13;   // Repeated. Client-supplied key,value pairs representing parameters to set on the recognizer.
+  EnumSecureContextLevel secure_context_level = 14; // Specifies the level of security for the recognition. Default is OPEN.
+}
+
+// Mandatory. Input message that defines parameters for the DTMF recognition
+// process. See [Defaults](#defaults) for a list of default values.
+// Included in [RecognitionInit](#recognitioninit). All parameters are optional.
+message DTMFRecognitionParameters {
+  RecognitionFlags recognition_flags = 1;           // Boolean recognition parameters.
+  oneof no_input_timeout {
+    int32 no_input_timeout_ms = 2;                  // Maximum time, in ms, allowed while waiting for user input after recognition timers are started. Default is 7000 ms. A value of -1 means no timeout.
+  }
+  oneof dtmf_interdigit_timeout {
+    int32 dtmf_interdigit_timeout_ms = 3;           // Maximum time, in ms, allowed while waiting for next DTMF char. Default is 5000 ms. A value of -1 means no timeout.
+  }
+  oneof dtmf_term_timeout {
+    int32 dtmf_term_timeout_ms = 4;                 // Maximum duration, in ms, to wait for DTMF term char. Default is 10000 ms. A value of -1 means no timeout.
+  }	
+  string dtmf_term_char = 5;                        // Terminating DTMF character for DTMF input recognition
+  oneof nbest_param {
+    int32 nbest = 6;                                // Maximum number of n-best hypotheses to return. Range is 0 to 999. Additional CPU cycles needed if > 5. Default is 2.
+  }
+  ResultFormat result_format = 7;                   // Specifies in what format the recognition result should be returned.
+  repeated string cookies = 8;                      // Repeated. Defines the HTTP cookies to be included when fetching a grammar resource using the Set-Cookie or Set-Cookie2 format. Format: "Set-Cookie:name=<cookie-name>;value=<cookie-value>;expires=<cookie-expiration>;...", "Set-Cookie2:name=<cookie-name>;value=<cookie-value>;expires=<cookie-expiration>;...". The name and value attributes are required. The remaining attributes are optional.
+  map<string, string> recognizer_parameters = 9;    // Repeated. Client-supplied key,value pairs representing parameters to set on the recognizer.
+  EnumSecureContextLevel secure_context_level = 10; // Specify the level of security for the recognition. Default is OPEN.
+}
+
+// Mandatory. Input message specifying the format of the audio to recognize.
+// Included in [RecognitionParameters](#recognitionparameters).
+message AudioFormat {
+  oneof audio_format_union {
+    PCM pcm = 1;                                    // Signed 16-bit little endian -> "audio/L16;rate=8000"           16-bit 8 kHz linear encoding
+    ULaw ulaw = 2;                                  // G.711 Mu-law, 8kHz          -> "audio/basic;rate=8000"          8-bit 8 kHz u-law encoding
+    ALaw alaw = 3;                                  // G.711 A-law, 8kHz           -> "audio/x-alaw-basic;rate=8000"   8-bit 8 kHz A-law encoding
+  }
+}
+
+// Input message defining PCM audio format. Audio rate is 8kHz.
+message PCM {}
+
+// Input message defining ALaw audio format.
+// G.711 audio formats are set to 8kHz.
+message ALaw {}
+
+// Input message defining ULaw audio format.
+// G.711 audio formats are set to 8kHz.
+message ULaw {}
+
+// Input message containing boolean recognition parameters.
+// In all cases, the default is false.
+// Included in [RecognitionParameters](#recognitionparameters).
+message RecognitionFlags {
+  bool stall_timers = 1;                            // Whether to disable recognition timers. By default, timers start when recognition begins.
+}
+
+// Input message used to specify the format to use for the recognition result.
+// Included in [RecognitionParameters](#recognitionparameters).
+message ResultFormat {
+  EnumResultFormat format = 1;                      // The result format to use. If not set, the NLSML format is used ("application/x-vnd.speechworks.emma+xml").
+  string additional_parameters = 2;                 // Additional parameters controlling the formatting of the result. Example: ";mrcpv=2.06;strictconfidencelevel=1"
+}
+
+// Supported formats for the recognition result.
+enum EnumResultFormat {
+  NLSML = 0;                                        // "NLSML" format. See www.w3.org/TR/nl-spec for details.    "application/x-vnd.speechworks.emma+xml"
+  EMMA = 1;                                         // "EMMA" format. See www.w3.org/TR/emma for details.        "application/x-vnd.nuance.emma+xml"
+}
+
+// Secure context level.
+enum EnumSecureContextLevel {
+  OPEN = 0;                                         // Prompt text and recognition results appear in the diagnostic and call logs, and utterance waveforms are recorded.
+  SUPPRESS = 1;                                     // Utterance waveforms are not recorded, recognition results in the diagnostic and call logs are suppressed.
+}
+
+// Mandatory. Input message defining one or more recognition resources
+// (grammars) to be used for the recognition.
+// Included in [RecognitionInit](#recognitioninit).
+message RecognitionResource {
+  oneof grammar {
+    string builtin = 1;                             // Name of a built-in resource supported by the installed language pack.
+    UriGrammar uri_grammar = 2;                     // The resource is an external file.
+    InlineGrammar inline_grammar = 3;               // Inline grammar, SRGS XML format, or other format.
+  }
+  string language = 4;                              // Mandatory. Language and geographical area (locale) code as xx-XX (2-letters format), e.g. en-US.
+  oneof grammar_weight {
+    int32 weight = 5;                               // Specifies the grammar's weight relative to other grammars active for that recognition. This value can range from 1 to 32767. Default is 1.
+  }
+  string grammar_id = 6;                            // Specifies the id that Nuance Recognizer will use to identify the grammar in the recognition result. If not set, Nuance Recognizer generates a unique one.
+}
+
+// Input message defining the URI reference to a grammar resource.
+message UriGrammar {
+  string uri = 1;                                   // Mandatory for UriGrammar resources. Location of the resource as a URI reference.
+  EnumMediaType media_type = 2;                     // The type of media used for the grammar being fetched. If not specified, Nuance Recognizer detects the media type.
+  UriGrammarParameters parameters = 3;              // Parameters to control the grammar fetch.
+}
+
+// Input message containing an inline recognition grammar.
+message InlineGrammar {
+  EnumMediaType media_type = 1;                     // The type of media used for the inline grammar data. If not specified, Nuance Recognizer detects the media type.
+  bytes grammar = 2;                                // Mandatory for InlineGrammar resources. Grammar data.
+}
+
+// Grammar format.
+enum EnumMediaType {
+  AUTOMATIC = 0;                                    // Recognizer will attempt to automatically determine the loaded grammar format.
+  APPLICATION_SRGS_XML = 1;                         // "application/srgs+xml"
+  APPLICATION_X_SWI_GRAMMAR = 2;                    // "application/x-swi-grammar"
+  APPLICATION_X_SWI_PARAMETER= 3;                   // "application/x-swi-parameter"
+}
+
+// Input message for fetching an external recognition grammar.
+message UriGrammarParameters {
+  uint32 request_timeout_ms = 1;                    // Time to wait when downloading resources, in ms. Default of 0 will use the server default of 30000 ms (30 seconds).
+  string content_base = 2;                          // Used to specify the base URI for resolving relative URLs. Default "" is the server default (no base).
+  uint32 max_age = 3;                               // Cache control parameter. Sets max-age, in seconds. Default of 0 is the server default (not present).
+  uint32 max_stale = 4;                             // Cache control parameter. Sets max-stale, in seconds. Default of 0 is the server default (do not use expired entries).
+}
+
+// Input message that starts the recognition no-input timer.
+// Included in [RecognitionRequest](#recognitionrequest).
+message Control {
+  oneof control_union {
+    StartTimersControl start_timers = 1;            // Starts the recognition no-input timer.
+  }
+}
+
+// Input message the client sends when starting the no-input timer.
+// Included in [Control](#control).
+message StartTimersControl {
+}
+
+// Output stream of messages in response to a recognize request.
+// Included in [Recognizer](#recognizer) - Recognize service.
+message RecognitionResponse {
+  oneof response_union {
+    Status status = 1;                              // Always the first message returned, indicates whether recognition was initiated successfully.
+    StartOfSpeech start_of_speech = 2;              // Number of samples to the moment that speech was detected.
+    EndOfSpeech end_of_speech = 3;                  // When the end of speech was detected.
+    Result result = 4;                              // The partial or final recognition result. A series of partial results may precede the final result.
+  }
+}
+
+// Output message indicating the status of the transcription.
+// The message and details are developer-facing error messages in English.
+// User-facing messages should be localized by the client based on the status
+// code.
+// For details see [Status codes](#status-codes).
+// Included in [RecognitionResponse](#recognizeresponse).
+message Status {
+  uint32 code = 1;                                  // HTTP-style return code: 100, 200, 4xx, or 5xx as appropriate.
+  string message = 2;                               // Brief description of the status.
+  string details = 3;                               // Longer description if available.
+}
+
+// Output message containing the start-of-speech message.
+// Included in [RecognitionResponse](#recognizeresponse).
+message StartOfSpeech {
+  uint32 first_audio_to_start_of_speech_ms = 1;     // Offset from start of audio stream to start of speech detected, in ms.
+}
+
+// Output message containing the end-of-speech message.
+// Included in [RecognitionResponse](#recognizeresponse).
+message EndOfSpeech {
+  uint32 first_audio_to_end_of_speech_ms = 1;       // Offset from start of audio stream to end of speech detected, in ms.
+}
+
+// Output message containing the result, including the result status.
+message Result {
+  string formatted_text = 1;                        // Formatted recognition result (could be empty).
+  string status = 2;                                // Recognition status information - SUCCESS, NO_MATCH, INCOMPLETE, NON_SPEECH_DETECTED, SPEECH_DETECTED, SPEECH_COMPLETE, MAX_CPU_TIME, MAX_SPEECH, STOPPED, REJECTED or NO_SPEECH_FOUND.
+}

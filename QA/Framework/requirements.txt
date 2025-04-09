@@ -1,0 +1,13 @@
+PyYAML>=3.13
+requests>=2.24.0
+six>=1.14.0
+unittest-xml-reporting>=3.0.2
+ecdsa
+urllib3>=1.25.10
+grpcio>=1.28.1
+grpcio-tools>=1.28.1
+protobuf>=3.11.3
+prettytable>=3.7.0
+wcwidth>=0.2.6
+importlib_metadata>=8.0.0
+

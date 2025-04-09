@@ -1,0 +1,585 @@
+# -l/bin/bash
+
+# ********** run NRaaS smoke test with specific functional test case (subset of NRC regression test) *************
+
+# ------------ test_01_connection ----------------
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_01_connection.NRCTestConnection.test002_NRCgRPCConnectOk
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_01_connection.NRCTestConnection.test005_NRCgRPCSecureConnectSetViaConfigParam
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_01_connection.NRCTestConnection.test006_NRCgRPCSecureConnectSetViaConfigPort
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_01_connection.NRCTestConnection.test007_NRCGlobalAuthToken
+
+# ------------ test_02_audio -------------------
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test001_NRCAudioGeneric1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test002_NRCAudioUlaw1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test003_NRCAudioUlaw2 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test004_NRCAudioAlaw1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test005_NRCAudioAlaw2 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test006_NRCAudioPCM1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test007_NRCAudioPCM2 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test008_NRCAudioWAV1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test009_NRCAudioMismatchWAV2 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test010_NRCAudioSilence #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test300_NRCAudioWAV1MismatchFormatUlaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test301_NRCAudioWAV1MismatchFormatAlaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test302_NRCAudioWAV1MismatchFormatInvalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test303_NRCAudioUlawMismatchFormatAlaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test304_NRCAudioUlawMismatchFormatInvalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test305_NRCAudioAlawMismatchFormatUlaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_02_audio.NRCTestAudio.test306_NRCAudioAlawMismatchFormatInvalid
+
+# ------------ test_03_grammar --------------------
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test001_BuiltinGrammarGeneric #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test002_InlineGrammarOne #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test003_InlineGrammarYes
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test004_UriGrammarYes #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test005_InvalidUriGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test006_BuiltinGrammarDigit #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test007_BuiltinGrammarBoolean #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test008_BuiltinGrammarDate #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test009_BuiltinGrammarTime1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0010_BuiltinGrammarTime2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0011_BuiltinGrammarPhone #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0012_BuiltinGrammarCurrency #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0013_BuiltinGrammarNumber #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0014_BuiltinGrammarAlphanum #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0015_BuiltinGrammarInvalidGrammarData
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0016_InlineGrammarAutomaticMediaType #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0017_InlineGrammarSrgsxmlMediaType #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0018_InlineGrammarInvalidGrammarData
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0019_InlineGrammarInvalidMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0020_UriGrammarAutomaticMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0021_UriGrammarSrgsxmlMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0022_UriGrammarInvalidMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0023_InvalidGrammarType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0024_BuiltinGrammarNLSMLResultFormat #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0025_BuiltinGrammarEMMAResultFormat #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0026_InlineGrammarNLSMLResultFormat
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0027_InlineGrammarEMMAResultFormat
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0028_URIGrammarNLSMLResultFormat
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0029_URIGrammarEMMAResultFormat
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0030_BuiltinGrammarId
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0031_InlineGrammarId
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0032_UriGrammarId
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0033_BuiltinGrammarWeight #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0034_InlineGrammarWeight #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0035_UriGrammarWeight #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0036_BuiltinGrammarInvalidWeight
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0037_InlineGrammarInvalidWeight
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0038_UriGrammarInvalidWeight
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0039_UriGrammarParametersRequestTimeout #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0040_UriGrammarParametersShortRequestTimeout
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0041_UriGrammarParametersContentBase #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0042_UriGrammarParametersInvalidContentBase
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0043_UriGrammarParametersMaxAgeDefault
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0044_UriGrammarParametersMaxAge #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0045_UriGrammarParametersMaxStaleDefault
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0046_UriGrammarParametersMaxStale #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test047_InvalidInlineGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0048_InlineGrammarXswigrammarMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0049_UriGrammarXswigrammarMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0050_UriGrammarXswigrammarMediaTypefrCA
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0051_UriGrammarXswiparameterMediaTypeforIncompleteTimeout #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0052_UriGrammarXswiparameterMediaTypeforIncompleteTimeout_1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0053_UriGrammarXswiparameterMediaTypefornBest3
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test054_ClientDataMapWithSingleEventSingleToken
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test055_ClientDataMapWithSingleEventMultipleToken
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test056_ClientDataMapWithMultipleEventMultipleToken
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test057_SessionID
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0058_BuiltinGrammarZipCode #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0059_BuiltinGrammarCreditCard #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0060_BuiltinGrammarAplphanum_lc #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0061_BuiltinGrammarPostcode #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0062_BuiltinGrammarCCexpDate #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0063_BuiltinGrammarSocialSecurity #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0064_BuiltinGrammarHelp #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0065_BuiltinGrammarExit #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0066_BuiltinGrammarOperator #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0067_SessionTimeout #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0068_InactiveTimeout
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0069_UriGrammarXswiparameterMediaTypeforMaxSpeechTimeout
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0070_UriGrammarXswiparameterMediaTypeforCompleteTimeout
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0071_UriGrammarXswiparameterMediaTypeforsensitivity #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0072_UriGrammarXswiparameterMediaTypefornBest0 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0073_UriGrammarXswiparameterMediaTypefornBest1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0074_UriGrammarXswiparameterMediaTypefornBest2 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0075_UriGrammarXswiparameterMediaTypefornBest4
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0076_UriGrammarXswiparameterMediaTypefornBest5
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0077_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_spoken #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0078_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_utteranceSNR #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0079_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_literalConfidence #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0080_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_disallow
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0081_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_literalTimings #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0082_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_attributes #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0083_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_rawScore #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0084_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_confidence #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0085_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_bestModel
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0086_UriGrammarXswiparameter_swirec_barge_in_mode_normal #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0087_UriGrammarXswiparameter_swirec_app_state_tokens #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0088_UriGrammarXswiparameter_swirec_extra_nbest_keys_SWI_utteranceSNR_Inline #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0089_UriGrammarXswiparameterMediaTypeforCompleteTimeout_default
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0090_UriGrammarXswiparameterMediaTypeforCompleteTimeout_Invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0091_UriGrammarXswiparameterMediaTypforIncompleteTimeout_default
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0092_UriGrammarXswiparameterMediaTypeforInCompleteTimeout_Invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0093_UriGrammarXswiparameterSensitivity_Invalid_High
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0094_UriGrammarXswiparameterSensitivity_Invalid_low
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0095_UriGrammarXswiparameterNbest_Invalid_low
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0096_UriGrammarXswiparameterNbest_Invalid_high
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0097_UriGrammarXswiparamete_swirec_magic_word_conf_thresh_default #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0098_UriGrammarXswiparameter_swirec_magic_word_conf_thresh_Invalid_high
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0099_UriGrammarXswiparameter_swirec_magic_word_conf_thresh_Invalid_low
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00100_UriGrammarXswiparamete_swirec_selective_barge_in_conf_thresh_default #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00101_UriGrammarXswiparameter_swirec_selective_barge_in_conf_thresh_Invalid_high
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00102_UriGrammarXswiparameter_swirec_selective_barge_in_conf_thresh_Invalid_low
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00103_UriGrammarXswiparamete_swirec_max_parses_per_literal_default #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00104_UriGrammarXswiparameter_swirec_max_parses_per_literal_Invalid_low
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00105_UriGrammarXswiparameter_swirec_max_parses_per_literal_Invalid_high
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00106_UriGrammarXswiparamete_swirec_max_sentences_tried_default #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00107_UriGrammarXswiparameter_swirec_max_sentences_tried_Invalid_low
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00108_UriGrammar_MovieScript_249
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00109_UriGrammar_MovieScript_250 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00110_UriGrammar_MovieScript_251
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00111_UriGrammar_big_script1817 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00112_UriGrammar_big_script2600
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00113_Tier4Grammar_Test1_GramSSM #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00114_Tier4swiparameter_swirec_extra_nbest_keys_SWI_semanticSource #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00115_Tier4Grammar_SLM_Yes #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00116_Tier4Grammar_SLM_snow
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00117_Tier4Grammar_SLM_Movie_Training
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00118_Tier4Grammar_RPTest1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00119_Tier4Grammar_Test1_GramSSM_srgsxml_MediaType #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00120_Tier4Grammar_SLM_Movie_Training_srgsxml_MediaType #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00121_Tier4Grammar_RPTest1_srgsxml_MediaType #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00122_Tier4Grammar_Test1_GramSSM_noMatch #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00123_Tier4Grammar_SLM_Movie_Training_noMatch #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00124_Tier4Grammar_RPTest1_noMatch #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00125_Tier4Grammar_Test1_GramSSM_emma #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00126_Tier4Grammar_SLM_snow_emma
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00127_Tier4Grammar_RPTest1_emma #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00128_Tier4Grammar_Test1_GramSSM_alaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00129_Tier4Grammar_SLM_snow_alaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00130_Tier4Grammar_RPTest1_alaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00131_Tier4GrammarSSM_InvalidMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00132_Tier4GrammarSLM_InvalidMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00133_Tier4GrammarRP_InvalidMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00134_Tier4GrammarFedex_emma_resultFormat_xswigrammar_mediaType #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00135_Tier4GrammarFedex_default_resultFormat_xswigrammar_mediaType #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00136_Tier4GrammarFedex_default_resultFormat_default_mediaType #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00137_Tier4GrammarFedex_emma_resultFormat_default_mediaType #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00138_Tier4GrammarFedex_InvalidMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00139_Tier4GrammarFedex_noMatch #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0300_BuiltinGrammarInvalidWeightZero
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0301_InlineGrammarInvalidWeightZero
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0302_UriGrammarInvalidWeightZero
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0303_BuiltinGrammarInvalidWeightNegativeValue
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0304_InlineGrammarInvalidWeightNegativeValue
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0305_UriGrammarInvalidWeightNegativeValue
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0306_UriGrammarParametersInvalidContentBase2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00140_UriGrammarXswiparameter_swirec_max_cpu_time_1ms #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00141_UriGrammarXswiparameter_swirec_max_cpu_time_default #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00142_UriGrammarXswiparameter_swirec_max_cpu_time_22000ms #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00143_UriGrammarXswiparameter_swirec_max_cpu_time_invalid_negative_value
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00144_UriGrammarXswiparameter_swirec_max_cpu_time_invalid_value
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00145_UriGrammarInvalidGrammarData
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00146_Https_UriGrammar_MovieScript_251
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00147_Https_UriGrammarInvalidGrammarData
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00148_Https_UriGrammarWeight #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00149_Https_UriGrammarXswigrammarMediaTypefrCA
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00150_Https_URIGrammarEMMAResultFormat
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00151_Https_UriGrammarParametersShortRequestTimeout
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00152_Https_UriGrammarParametersMaxAge
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00153_Https_UriGrammarXswiparameter_swirec_max_sentences_tried_Invalid_low
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0201_Credit_Card_Masking_with_BuiltinGrammarDigit_1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0202_Credit_Card_Masking_with_BuiltinGrammarDigit_2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0203_Credit_Card_Masking_with_BuiltinGrammarDigit_3
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00500_UriGrammarXswiparameterNbest_Invalid_float
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00501_UriGrammarXswiparameter_swirec_magic_word_conf_thresh_Invalid_float
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00502_UriGrammarXswiparameter_swirec_selective_barge_in_conf_thresh_Invalid_float
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00503_UriGrammarXswiparameter_swirec_max_parses_per_literal_Invalid_float
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00504_UriGrammarXswiparameter_swirec_max_sentences_tried_Invalid_float
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00505_BuiltinAutomaticMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00506_BuiltinSrgsxmlMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00507_BuiltinInvalidMediaType
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00508_UriGrammarXswiparameterMediaTypefornBest0_confLevel_high
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00509_UriGrammarXswiparameterMediaTypefornBest3_confLevel_high
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00510_UriGrammarXswiparameterMediaTypefornBest5_confLevel_high
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test089_NRIR_osr20_feature_W3CGram_Case1_Activate_Grammars_Test_Activate_Grammars
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00511_NRIR_osr20_feature_W3CGram_Case1_Activate_Grammars_Test_Activate_Grammars_3_Silence
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00512_NRIR_osr20_feature_W3CGram_Case1_Activate_Grammars_Test_Activate_Grammars_5_Silence
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00513_NRIR_osr20_feature_W3CGram_Case1_Activate_Grammars_Test_Activate_Grammars_10_Silence
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00514_NRIR_osr20_feature_W3CGram_Case1_Activate_Grammars_Test_Activate_Grammars_3
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00515_NRIR_osr20_feature_W3CGram_Case1_Activate_Grammars_Test_Activate_Grammars_5
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00516_NRIR_osr20_feature_GrammarWeight_Grammar4
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00517_NRIR_osr20_feature_GrammarWeight_Grammar_confusing_without_weight
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00518_NRIR_osr20_feature_GrammarWeight_Grammar_not_weighted_wear
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00519_NRIR_osr20_feature_GrammarWeight_Grammar_weighted_wear
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00520_NRIR_osr20_feature_GrammarWeight_Grammar_weighted_wear_ruleref 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00521_NRIR_osr20_feature_NewW3CGram_NewGrammar_mode_voice 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00522_NRIR_proton_feature_DA_word_list_script_da_wordlist_onthefly 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00523_NRIR_proton_feature_DA_word_list_script_da_wordlist_onthefly_userdict
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00524_NRIR_osr20_feature_DigitConstraints_DigitConstraints2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00525_NRIR_osr20_feature_NewW3CGram_NewGrammar_pizza
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00526_NRIR_proton_feature_DA_word_list_script_da_wordlist_weighted
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00527_NRIR_osr20_feature_GrammarWeight_Grammar_confusing_with_weight
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00528_NRIR_osr_quantum_feature_Multiword_Pronunciation_MultiWord_Pronun_1_en_us_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00529_NRIR_osr_quantum_feature_Multiword_Pronunciation_MultiWord_Pronun_2_en_us_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00530_NRIR_osr_quantum_feature_Multiword_Pronunciation_MultiWord_Pronun_3_en_us_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00531_NRIR_osr_quantum_feature_Multiword_Pronunciation_MultiWord_Pronun_4_en_us_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00532_NRIR_osr_quantum_feature_Multiword_Pronunciation_MultiWord_Pronun_5_en_us_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00533_NRIR_osr_quantum_feature_Multiword_Pronunciation_MultiWord_Pronun_6_en_us_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00534_NRIR_osr_quantum_feature_Multiword_Pronunciation_MultiWord_Pronun_7_en_us_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00535_NRIR_osr20_feature_parameter_User_Defined_Baseline_Test_User_Defined_Baseline_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00536_NRIR_osr20_feature_GrammarWeight_Grammar1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00537_NRIR_osr20_feature_GrammarWeight_Grammar2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00538_NRIR_osr20_feature_GrammarWeight_Grammar3
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00539_NRIR_osr20_feature_GrammarWeight_GrammarActivate_w_weight_wear
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00540_NRIR_osr20_feature_LateBinding_Case1_Import_2nonterminal
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00541_NRIR_osr20_feature_LateBinding_Case1_Import_2nonterminal_change01
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00542_NRIR_osr20_feature_LateBinding_Case1_Import_2nonterminal_change0_1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00543_NRIR_osr20_feature_LateBinding_Case1_Import_2nonterminal_change1_0
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00544_NRIR_osr20_feature_LateBinding_Case2_Import_1nonterminal_in_import
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00545_NRIR_osr20_feature_LateBinding_Case2_Import_1nonterminal_in_import_change0
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00546_NRIR_osr20_feature_LateBinding_Case2_Import_1nonterminal_in_import_change0_1_2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00547_NRIR_osr_quantum_feature_param_gram_precedence_param_gram_precedence_multi_override_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00548_NRIR_osr_quantum_feature_param_gram_precedence_param_gram_precedence_override_PERL_1 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00549_NRIR_osr_quantum_feature_param_gram_precedence_param_gram_precedence_override_PERL_true 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00550_NRIR_osr_quantum_feature_param_gram_precedence_param_gram_precedence_override_PERL_TRUE_UPPER
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00551_NRIR_osr_quantum_feature_param_gram_precedence_param_gram_precedence_range_override_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00552_NRIR_proton_feature_parameter_test_swirec_lmweight_import_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00553_NRIR_osr20_feature_Grammar_SWI_vars_delta_score_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00554_NRIR_osr20_feature_NewW3CGram_NewGrammar_lexicon 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00555_NRIR_osr20_feature_Grammar_SWI_vars_precedence 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00556_NRIR_osr20_feature_Grammar_SWI_vars_precedence_import  
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00557_NRIR_proton_feature_parameter_test_script_robust_compile_time_script 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00558_NRIR_proton_feature_parameter_test_swirec_word_conf_enabled_parallel_gram_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00559_NRIR_proton_feature_parameter_test_swirec_word_confidence_enabled_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00560_NRIR_proton_feature_parameter_test_swirec_enable_robust_compile_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00561_NRIR_proton_feature_DA_word_list_script_da_wordlist_many_userdict 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00562_NRIR_spectrum_feature_interpolated_LM_rec_neg_interpolated_LM_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00563_NRIR_osr20_feature_Grammar_VXI_Map_Property_AutoUpdate_Case1  
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00564_NRIR_osr20_feature_DigitConstraints_DigitConstraints1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00565_NRIR_osr20_feature_W3CGram_Case2_Test_Parser_Test_Parser_AIO_PERL_1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00566_NRIR_osr20_feature_W3CGram_Case2_Test_Parser_Test_Parser_AIO_PERL_2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00567_NRIR_osr20_feature_W3CGram_Case2_Test_Parser_Test_Parser_AIO_PERL_3
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00568_NRIR_osr20_feature_W3CGram_Case2_Test_Parser_Test_Parser_AIO_PERL_4
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test00569_NRIR_osr20_feature_W3CGram_Case2_Test_Parser_Test_Parser_AIO_PERL_5
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0197_dynamicLinkedGrammar_yes #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0198_dynamicLinkedGrammar_digit #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0199_dynamicLinkedGrammar_Invalid #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0200_NoActiveResource
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0201_Credit_Card_Masking_with_BuiltinGrammarDigit_1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0202_Credit_Card_Masking_with_BuiltinGrammarDigit_2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0203_Credit_Card_Masking_with_BuiltinGrammarDigit_3
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0204_UriGrammar_Name_SteveJackson
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0205_UriGrammar_Stations333_Cuba
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0206_UriGrammar_EquipID_E_One
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0207_UriGrammar_TrainID_CCRMHOH_One_Ten
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0208_UriGrammar_Genesys_Invalid_Grammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0209_Genesys_UriGrammar_InvalidAudio
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0210_Genesys_UriGrammar_askPassport_numbers
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0211_Genesys_UriGrammar_askPassport_alphanumerics
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_03_grammar.NRCTestGrammar.test0212_Genesys_UriGrammar_askPassport_noMatch
+
+# ------------ test_04_recognitionParams ---------------
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test001_RecogParamGeneric1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test002_RecogResultFormatNLSML #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test003_RecogResultFormatEMMA #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test004_RecognitionRepeatedResourceGrammar_BuiltinAndInlineGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test005_RecognitionRepeatedResourceGrammar_BuiltinAndUriGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test006_RecognitionRepeatedResourceGrammar_InlineAndUriGrammar #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test007_RecognitionRepeatedResourceGrammar_InlineAndUriGrammarAndBuiltin #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test008_Recognition_nBest_1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test009_Recognition_nBest_2 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test010_Recognition_nBest_3
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test011_Recognition_nBest_5 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test012_Recognition_nBest_6
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test013_Recognition_nBest_0 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test014_Recognition_nBest_EMMA #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test015_Recognition_nBest_NLSML #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test016_Recognition_confLevel_allaccepted
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test017_Recognition_confLevel_low #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test018_Recognition_confLevel_high #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test019_Recognition_confLevel_allnomatch #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test020_Recognition_no_input_timeout_disabled
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test021_Recognition_no_input_timeout_invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test022_Recognition_no_input_timeout_always
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test023_Recognition_no_input_timeout_ok #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test024_Recognition_complete_timeout_invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test025_Recognition_complete_timeout_disabled
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test026_Recognition_complete_timeout_ok #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test027_Recognition_incomplete_timeout_invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test028_Recognition_incomplete_timeout_disabled
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test029_Recognition_incomplete_timeout_ok #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test030_Recognition_max_speech_timeout_invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test031_Recognition_max_speech_timeout_disabled #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test032_Recognition_max_speech_timeout_ok
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test033_Recognition_speech_detector_sensitivity_ok #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test034_Recognition_speech_detector_sensitivity_invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test035_Recognition_recognizer_parameters1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test036_Recognition_recognizer_parameters2 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test037_Recognition_recognizer_parameters_invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test038_Recognition_endpointer_parameters1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test039_Recognition_endpointer_parameters2 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test040_Recognition_endpointer_parameters_invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test041_Recognition_set_cookie_ok
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test042_Recognition_set_cookie_empty
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test043_Recognition_set_cookie_invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test044_Recognition_secure_context_level_open #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test045_Recognition_secure_context_level_suppress #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test300_Recognition_nBest_Invalid_Negative
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test301_Recognition_nBest_Invalid_Exceed_Max
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test302_Recognition_speech_detector_sensitivity_Exceed_Max
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test310_Recognition_StallTimers_True_10s_silence_01234
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test311_Recognition_StallTimers_False
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test312_Recognition_StallTimers_True
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test313_Recognition_StallTimers_Invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test314_Recognition_StallTimers_True_Numeric
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test315_Recognition_StallTimers_False_Numeric
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test316_Recognition_StallTimers_Invalid_Numeric
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test317_Recognition_StallTimers_True_Control_0ms
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test318_Recognition_StallTimers_True_Control_2900ms
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test319_Recognition_StallTimers_True_Control_3100ms
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test320_Recognition_StallTimers_True_NoInputTimeout_3000ms_Control_6900ms
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test321_Recognition_StallTimers_True_NoInputTimeout_3000ms_Control_7100ms
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test322_Recognition_StallTimers_False_Control_0s
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test323_Recognition_StallTimers_False_Control_3100ms
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test324_Recognition_StallTimers_False_NoInputTimeout_3000ms_Control_7100ms
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test500_Recognition_Confidence_Invalid_Low
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test501_Recognition_Confidence_Invalid_High
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test046_NRIR_proton_feature_completetimeout_ctimeout_grammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test047_NRIR_osr_quantum_feature_ContraintList_Constraints_blue
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test048_NRIR_osr20_feature_Grammar_SWI_vars_allowable_chars_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test502_NRIR_osr20_feature_Grammar_SWI_vars_allowable_chars_PERL_Slash_Symbol
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test503_NRIR_osr20_feature_Grammar_SWI_vars_allowable_chars_PERL_Sentence_Symbols
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test504_NRIR_osr20_feature_Grammar_SWI_vars_allowable_chars_PERL_Ampersand_Symbol
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test505_NRIR_osr20_feature_Grammar_SWI_vars_allowable_chars_PERL_Math_Symbols
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test506_NRIR_osr20_feature_Grammar_SWI_vars_allowable_chars_PERL_Bracket_Symbols
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test507_NRIR_osr20_feature_Grammar_SWI_vars_check_date_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test508_NRIR_osr20_feature_Grammar_SWI_vars_extra_info_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test509_NRIR_osr_quantum_feature_ContraintList_Constraints_3_0_9_3_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test510_NRIR_osr_quantum_feature_ContraintList_Constraints_3_oh_9_3_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test511_NRIR_osr_quantum_feature_ContraintList_Constraints_5_1_4_9_0_4_7_8_0_0_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test512_NRIR_osr_quantum_feature_ContraintList_Constraints_5_1_4_9_oh_4_7_8_oh_oh_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test513_NRIR_osr_quantum_feature_ContraintList_Constraints_Cuba_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test514_NRIR_osr_quantum_feature_ContraintList_Constraints_Egypt_Colombia_Paraguay_Egypt_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test515_NRIR_osr_quantum_feature_ContraintList_Constraints_Nepal_New_Zealand_Argentina_Ukraine_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test516_NRIR_osr_quantum_feature_ContraintList_Constraints_black_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test517_NRIR_osr_quantum_feature_ContraintList_Constraints_black_blue_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test518_NRIR_osr_quantum_feature_ContraintList_Constraints_red_green_yellow_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test519_NRIR_osr_quantum_feature_ContraintList_Constraints_red_yellow_blue_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test520_NRIR_osr_quantum_feature_ContraintList_Weighted_black_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test521_NRIR_osr_quantum_feature_ContraintList_Weighted_black_white_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test522_NRIR_osr_quantum_feature_ContraintList_Weighted_red_yellow_blue_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test523_NRIR_osr20_feature_Grammar_SWI_vars_uri_len_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test524_NRIR_osr20_feature_ConstraintWeight_ConstraintWeight_basic_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test525_NRIR_proton_feature_completetimeout_ctimeout_precedence_1_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test526_NRIR_spectrum_feature_model_combination_test_1st_pass_model_combination_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test527_NRIR_spectrum_feature_model_combination_test_2nd_pass_model_combination_1_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test528_NRIR_spectrum_feature_model_combination_test_2nd_pass_model_combination_2_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test529_NRIR_osr20_feature_Grammar_SWI_vars_parallel_grammars_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test530_NRIR_osr_quantum_feature_ConstraintList_scripts_3_0_9_3_PERL  
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test531_NRIR_osr_quantum_feature_ConstraintList_Constraints_3_5_7_0_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test532_NRIR_osr_quantum_feature_ConstraintList_Constraints_3_5_7_oh_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test533_NRIR_osr_quantum_feature_ConstraintList_Constraints_5_1_4_9_0_4_7_8_oh_0_PERL  
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test534_NRIR_osr_quantum_feature_ConstraintList_Constraints_5_1_4_9_oh_4_7_8_0_0_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test535_NRIR_osr_quantum_feature_ConstraintList_Constraints_Albania_Colombia_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test536_NRIR_osr_quantum_feature_ConstraintList_Constraints_Brazil_Paraguay_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test537_NRIR_osr_quantum_feature_ConstraintList_Constraints_Denmark_Macedonia_Brazil_Venezuela_The_Bahamas_Saint_Kitts_and_Nevis_China_Russia_Chad_Ivory_Coast_PERL  
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test538_NRIR_osr_quantum_feature_ConstraintList_Constraints_Hungary_Paraguay_Togo_Singapore_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test539_NRIR_osr_quantum_feature_ConstraintList_Constraints_Italy_France_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test540_NRIR_osr_quantum_feature_ConstraintList_Constraints_Liechtenstein_French_Guiana_Tonga_Philippines_Mozambique_Cyprus_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test541_NRIR_osr_quantum_feature_ConstraintList_Constraints_Micronesia_Bangladesh_Egypt_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test542_NRIR_osr_quantum_feature_ConstraintList_Constraints_black_white_PERL  
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test543_NRIR_osr_quantum_feature_ConstraintList_Constraints_blue_green_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test544_NRIR_osr_quantum_feature_ConstraintList_Constraints_red_green_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test545_NRIR_osr_quantum_feature_ConstraintList_Constraints_white_black_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test546_NRIR_osr_quantum_feature_ConstraintList_Weighted_black_blue_PERL  
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test547_NRIR_osr_quantum_feature_ConstraintList_Weighted_red_green_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test548_NRIR_osr_quantum_feature_ConstraintList_Weighted_red_green_yellow_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test549_NRIR_proton_feature_completetimeout_ctimeout_multiple_grammar_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test551_NRIR_spectrum_feature_NLU_meaning_mask_meaning_mask_format_1_PERL 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test552_NRIR_spectrum_feature_NLU_meaning_mask_meaning_mask_format_2_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test554_NRIR_spectrum_feature_NLU_meaning_mask_meaning_mask_smoke_2_ssm_PERL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test049_Recognition_secure_context_level_suppress_uri_grammar #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_04_recognitionParams.NRCTestRecognitionParams.test050_Recognition_secure_context_level_suppress_noMatch #-clog
+
+# ------------ test_05_recognitionLang ------------
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test001_NRCRecogLangGeneric1 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test002_NRCRecogLang_enUS
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test006_NRCRecogLang_esUSUlaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test007_NRCRecogLang_esUSAlaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test008_NRCRecogLang_esUSPCM
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test010_NRCRecogInlineGrammar_esUS
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test012_NRCRecogUriGrammar_esUS #-clog
+
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test013_NRCRecogLang_frCAUlaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test014_NRCRecogLang_frCAAlaw
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test015_NRCRecogLang_frCAPCM
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test016_NRCRecogInlineGrammar_frCA
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test017_NRCRecogUriGrammar_frCA 
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test309_NRCRecogMismatch_Lang_frCA_Audio_enUS
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test500_NRCRecogMismatch_Lang_enUS_Audio_frCA
+
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test021_NRCRecogMismatch_Lang_enUS_Audio_esUS
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test022_NRCRecogInvalid_Lang #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test300_NRCRecogInvalid_Lang_Invalid_Format_Dot_Lowercase
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test301_NRCRecogInvalid_Lang_Invalid_Format_Underscore_Lowercase
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test302_NRCRecogInvalid_Lang_Invalid_Format_Dash_Uppercase
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test303_NRCRecogValid_Lang_Invalid_Format_Dash_Lowercase
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test304_NRCRecogValid_Lang_Invalid_Format_Dot_Lowercase
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test305_NRCRecogValid_Lang_Invalid_Format_Underscore_Lowercase
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test306_NRCRecogValid_Lang_Invalid_Format_Dash_Uppercase
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test307_NRCRecogValid_Lang_Invalid_Format_Dot_Mixed_Case
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test308_NRCRecogValid_Lang_Invalid_Format_Underscore_Mixed_Case
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_05_recognitionLang.NRCTestRecognitionLang.test501_NRCRecogValid_Lang_Invalid_Format_Inverted_Lang_Country
+
+# ------------  test_06_recognition ------------
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test001_NRCRecognitionGeneric1 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test002_RecognitionNoMatch #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test003_RecognitionBuiltinThenInlineGrammar #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test004_RecognitionBuiltinThenUriGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test005_RecognitionInlineThenUriGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test006_RecognitionUriGrammarThenInlineGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test007_RecognitionBuiltinThenUriGrammarThenInlineGrammar #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test008_RecognitionInlineGrammarThenBuiltinThenUriGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test009_RecognitionUriGrammarThenInlineGrammarThenBuiltin #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test010_RecognitionInvalid_UriGrammarThenInlineGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test011_RecognitionInvalid_BuiltinThenValidInlineGrammar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test012_RecognitionInvalid_BuiltinThenValidUriGrammarThenValidInline #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test013_RecognitionInvalid_BuiltinThenInvalidUriGrammarThenValidInline
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test014_RecognitionInvalid_BuiltinThenInvalidUriGrammarThenInvalidInline #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test015_RecognitionWith_No_Audio #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test016_RecognitionStartOfSpeech_ok
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test017_RecognitionStartOfSpeech_empty
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test018_RecognitionEndOfSpeech_ok #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test019_RecognitionEndOfSpeech_endsilence #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test020_RecognitionWith_Noise_Audio #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test500_RecognitionUriGrammarThenInlineGrammarThenBuiltin_Silence
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test501_RecognitionUriGrammarThenInlineGrammarThenBuiltin_No_Audio
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test502_RecognitionUriGrammarThenInlineGrammarThenBuiltin_Noise_Audio
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test503_RecognitionDtmf_enUSThenesUSThenfrCA
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_06_recognition.NRCTestRecognition.test504_RecognitionAudio_enUSThenesUSThenfrCA
+
+
+# ------------ test_08_dtmf ------------
+./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test001_NRCDtmfGeneric1
+./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test002_NRCDtmf_resultFormat_nlsml
+./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test003_NRCDtmf_resultFormat_emma
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test004_NRCDtmf_Number
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test005_NRCDtmf_dtmf_then_audio
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test006_NRCDtmf_dtmf_then_dtmf
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test007_NRCDtmf_minlength_No_Match
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test008_NRCDtmf_maxlength_1_No_Match
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test009_NRCDtmf_maxlength_2_No_Match
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0010_NRCDtmf_No_Match
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0011_NRCDtmf_Term_Char_hash
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0012_NRCDtmf_Term_Char_star
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0013_NRCDtmf_Term_Char_digit_1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0014_NRCDtmf_Term_Char_digit_2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0015_NRCDtmf_Term_Char_digit_3
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0016_NRCDtmf_Term_Char_digit_4
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0017_NRCDtmf_Term_Char_digit_5
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0018_NRCDtmf_Term_Char_digit_6
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0019_NRCDtmf_Term_Char_digit_7 #-clog
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0020_NRCDtmf_Term_Char_digit_8
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0021_NRCDtmf_Term_Char_digit_9
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0022_NRCDtmf_Term_Char_Invalid1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0023_NRCDtmf_Term_Char_Invalid2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0024_NRCDtmf_no_input_timeout
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0025_NRCDtmf_no_input_timeout_2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0026_NRCDtmf_no_input_timeout_Invalid
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0027_NRCDtmf_no_input_timeout_disabled
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0028_NRCDtmf_no_input_timeout_ok
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0029_NRCDtmf_no_input_timeout_Invalid_2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0030_NRCDtmf_Term_Char_timeout_0
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0031_NRCDtmf_Term_Char_timeout_5000
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0032_NRCDtmf_Term_Char_Invalid1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0033_NRCDtmf_Term_Char_Invalid2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0034_NRCDtmf_Interdigit_OutofRange
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0035_NRCDtmf_Interdigit_Max
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0036_NRCDtmf_Interdigit_Min
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0037_NRCDtmf_Interdigit1
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0038_NRCDtmf_Interdigit2
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0039_NRCDtmf_Interdigit3
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0040_NRCDtmf_Interdigit_Termchar_Used
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0041_NRCDtmf_Interdigit_Termchar_Unused
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test042_NRCDtmf_TwoDTMF_Noactivity_between
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test043_NRCDtmf_MultipleDTMF_Noactivity_between
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0101_NRCDtmf_long_duration
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0102_NRCDtmf_boolean
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0103_NRCDtmf_grammar_creditcard
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test01031_NRCDtmf_grammar_creditcard_WRONG_TYPE
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0104_NRCDtmf_grammar_date
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test01041_NRCDtmf_grammar_date_LESS_MIN
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0105_NRCDtmf_grammar_time
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test01051_NRCDtmf_grammar_time_OVER_MAX
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0106_NRCDtmf_grammar_currency
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0107_NRCDtmf_grammar_currency_frCA
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0108_NRCDtmf_grammar_postcode
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0109_NRCDtmf_grammar_socialsecurity
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0110_NRCDtmf_grammar_phone
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0111_NRCDtmf_grammar_ccexpdate
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0112_NRCDtmf_secure_context_level_open
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0113_NRCDtmf_secure_context_level_suppress
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0114_NRCDtmf_UriGrammar_GlobalCommands_dtmf_Digits
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0115_NRCDtmf_InlineGrammar_Digits_no_input_timeout
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0116_NRCDtmf_UriGrammar_GlobalCommands_dtmf_Digits_no_input_timeout
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0117_NRCDtmf_UriGrammar_Digits_dtmf_InvalidWeight
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0118_NRCDtmf_InlineGrammar_Digits_dtmf_InvalidWeight
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0119_NRCDtmf_UriGrammar_last4PmtAccount
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0120_NRCDtmf_UriGrammar_last4PmtAccount_NO_MATCH
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0121_NRCDtmf_UriGrammar_last4PmtAccount_no_input_timeout
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0122_NRCDtmf_UriGrammar_pharm0115_PharmacyMenu
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0123_NRCDtmf_UriGrammar_pharm0115_PharmacyMenu_NO_MATCH
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0124_NRCGenesys_UriGrammar_Stations333_No_Match
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0125_NRCDtmf_InlineGrammar_Digits
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0126_NRCDtmf_Send_FinalResult_Immediately_When_DtmfTermChar_Empty
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0127_NRCDtmf_Send_FinalResult_Immediately_When_DtmfTermChar_NotSet
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0128_NRCDtmf_Term_CharEmpty_timeout_Zero
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0129_NRCDtmf_Term_CharNone_timeout_Zero
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0130_NRCDtmf_length
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0131_NRCDtmf_length_TermChar
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0132_NRCDtmf_minMaxLength_TermChar
+./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_08_dtmf.NRCTestDtmf.test0133_NRCDtmf_uriGrammar_ssn
+
+# ------------ test_09_dtmf_recognitionLang ------------
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test001_NRCDtmfGeneric1
+./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test002_NRCDtmf_esUS
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test003_NRCDtmf_frCA
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test004_NRCDtmf_itIT
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test005_NRCDtmf_enGB
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test006_NRCDtmf_frFR
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test007_NRCDtmf_deDE
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test008_NRCDtmf_esES
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test009_NRCDtmf_nlNL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test010_NRCDtmf_fiFI
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test011_NRCDtmf_svSE
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test012_NRCDtmf_nbNO
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test013_NRCDtmf_csCZ
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test014_NRCDtmf_daDK
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test015_NRCDtmf_elGR
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test016_NRCDtmf_hiIN
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test017_NRCDtmf_idID
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test018_NRCDtmf_jaJP
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test019_NRCDtmf_koKR
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test020_NRCDtmf_plPL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test021_NRCDtmf_ptBR
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test022_NRCDtmf_ruRU
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test023_NRCDtmf_thTH
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test024_NRCDtmf_trTR
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test025_NRCDtmf_zhCN
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test026_NRCDtmf_zhHK
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test027_NRCDtmf_zhTW
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test028_NRCDtmf_enAU
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test029_NRCDtmf_caES
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test030_NRCDtmf_esMX
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test031_NRCDtmf_ptPT
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test032_NRCDtmf_hrHR
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test033_NRCDtmf_huHU
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test034_NRCDtmf_skSK
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test035_NRCDtmf_roRO
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test036_NRCDtmf_msMY
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test037_NRCDtmf_heIL
+#./nrctest.sh RegressionTestNRaaS/gRPCTest/ test_09_dtmf_recognitionLang.NRCTestDtmfRecognitionLang.test038_NRCDtmf_viVN
+
+# ------------- NRaaS full regression test ------------
+#./nrctest.sh -x RegressionTestNRaaS/gRPCTest/
