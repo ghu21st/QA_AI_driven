@@ -1,0 +1,90 @@
+#-------------------------------------------
+#------------ for NRC ----------------------
+# Note: NRC QA test config for automation regression test via gRPC. Please keep gRPC proto file updated and compiled before run NRC test
+ # TestType, NRCTest -> True -> NRC test; False -> NRaaS test;
+NRCTest: False
+
+  # NRC via gRPC server port, default: 50051, insecure connection; secure connection port: 50052
+#NRCServicePort: 50051  # for gRPC connection NRC server port, default
+#NRCSecureServicePort: 50052 # for gRPC secure connection NRC server port, default
+#NRCServicePort: 50053  # for gRPC connection ENVOY load balancer
+NRCSecureServicePort: 443 # for gRPC secure connection NRC server port, default
+
+  # NRC via gRPC server IP or hostname for NRC test only
+#NRCServiceIP: 'mtl-nraas-vm02'  # QA1 Kubernetes cluster, master node
+#NRCServiceIP: mtl-nraas-vm03  # QA1 Kubernetes cluster, worker node
+#NRCServiceIP: 'mtl-ce05'  # DEV Kubernetes cluster, master node
+#NRCServiceIP: 'mtl-nraas-vm08'  # QA2 Kubernetes cluster, master node
+#NRCServiceIP: '10.3.106.187'  # MRCP gateway QA Kubernetes cluster, master node
+#NRCServiceIP: 10.3.106.38  # QA1 master node, IP
+#NRCServiceIP: 10.33.12.146  # QA AKS user -> NRC on AKS cluster
+#NRCServiceIP: mtl-nraas-vm20 
+
+  # NRaaS service URL for NRaaS test only
+#NRCServiceURL: https://nraas.qa.cd4.private.crt.nuance.com:443/nuance.nrc.v1.NRC   # NRaaS QA env in CD4 endpoint
+#NRCServiceURL: https://nraas.stage.cd4.private.crt.nuance.com:443/nuance.nrc.v1.NRC  # NRaaS staging env in CD4 endpoint
+NRCServiceURL: https://nraas.dev.cd4.private.crt.nuance.com:443/nuance.nrc.v1.NRC   # NRaaS DEV env in CD4 endpoint
+#NRCServiceURL: nraas.qa.cd4.private.crt.nuance.com:443/nuance.nrc.v1.NRC   # Not working - must have https
+#NRCServiceURL: https://10.58.131.24:443/nuance.nrc.v1.NRC                         # Not working - must be URL not IP
+
+ # NRaaS client id and secret for Global Auth in CD4
+# for QA env in CD4
+#NRCClientId: "appID:nraas-qa_origin_qa:geo:qa:clientName:default"     # NRaaS QA env in CD4
+#NRCClientSecret: "-Y4ih13WXXo7XZI9tlgdWDDwbEmlG6rT-Y7Q6LiRs14"  # NRaaS QA env in CD4
+#GAurl: "https://auth.qa.cd4.private.crt.nuance.com/oauth2/token" # Global Auth URL for QA env
+#GAurl: ""                                                        # Global Auth URL empty, GA bypass=true
+
+# for stage env in CD4
+#NRCClientId: "appID:NRRuntimeCredentials_origin_us:geo:stage:clientName:default"     # NRaaS stage env in CD4
+#NRCClientSecret: "XtMEhFcTa0K2vwTi7HTsIxIz3T5h20QnB8YdtJghgGg"  # NRaaS stage env in CD4
+#GAurl: "https://auth.stage.cd4.private.crt.nuance.com/oauth2/token" # Global Auth URL for stage env
+
+# for DEV env in CD4 
+NRCClientId: "appID:nraas-dev_origin_dev:geo:dev:clientName:default"     # NRaaS DEV env in CD4
+GAurl: "https://auth.dev.cd4.private.crt.nuance.com/oauth2/token" # Global Auth URL for stage env
+
+
+# Global auth settings
+GAGrantType: "client_credentials" # global auth grant type
+GAScope: "nr log" # global auth scope; options: 'nr' or 'log' or 'nr log'
+
+  # NRC test via secure connection or insecure connector settings, default: False
+NRCTestSecureConnect: True    # Must set to True for NRaaS test, optional for NRC
+#NRCTestSecureConnect: False    # Must set to True for NRaaS test, optional for NRC
+
+
+  # NRC Kafka service port
+  # Exposed to outside cluster: "31090"
+  # Port for internal to cluster: "30092"
+NRCKafkaPort: "31090"
+
+  # NRC test with metadata in header. 
+  # Required if NRC value: nrcConfig.authentication.enabled=True
+  # otherwise set metadata to None
+NRCTestMetadata: #None
+  #x-nuance-client-id: "NMDPTRIAL_karthickeyan_chockaligam_nuance_com_20200120T170008297245"
+  #x-nuance-client-id: "appID:NMDPTRIAL_gang_hu_nuance_com_20221007T152710664720_origin_dev:geo:dev:clientName:default"
+  #x-nuance-client-id: "appID:NMDPTRIAL_gang_hu_nuance_com_20221122T160126508643_origin_qa:geo:qa:clientName:default"
+  x-nuance-client-id: "appID:nraas-dev_origin_dev:geo:dev:clientName:default"
+  audiofileid: "12346"
+
+
+  # NRC QA Apache server for test resource (uri, grammar...)
+NRCTestResURL: 'http://192.168.9.18/nrc_res1/tests/'      # for case that verify grammar fetch via http, mtl-nr11mw-vm61
+NRCTestResURLSecure: 'https://192.168.9.18/nrc_res1/tests/' # for cases that verify grammar fetch via https
+
+
+  # NRC QA audio test params
+NRCAudioPath: '/package/unarchive/Framework/nrctest/audio/'
+NRCAudioBufms: 30
+NRCAudioXrate: 1.0
+
+  # NRC QA test robust re-try params:
+NRCTestRetryNum: 1
+NRCTestRetryWaitSec: 5
+
+  # NRC QA test logging params, 0 - warning (regression/load), 1 -  info (regressiion), 2 - debug
+NRCTestLogging: 2
+
+#------------------------------------------------
+

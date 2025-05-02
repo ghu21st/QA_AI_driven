@@ -1,0 +1,48 @@
+#-------------------------------------------
+#------------ for NRC ----------------------
+# Note: NRC QA test config for automation regression test via gRPC. Please keep gRPC proto file updated and compiled before run NRC test
+ # TestType, NRCTest -> True -> NRC test; False -> NRaaS test;
+NRCTest: False
+
+# NRC via gRPC server port, default: 50051, insecure connection; secure connection port: 4433
+NRCSecureServicePort: 4433 # for gRPC secure connection NRC server port, default
+
+# NRaaS service URL for NRaaS test only
+NRCServiceURL: https://nrc.qa.voice-channel.azure.net:4433/nuance.nrc.v1.NRC   # NRaaS QA env in CD1 endpoint
+
+
+GAurl: "http://127.0.0.1:3000/v1/token" # Global Auth URL for QA env
+NRCTestSecureConnect: True    # Must set to True for NRaaS test, optional for NRC
+
+# NRC Kafka service port
+#NRCKafkaPort: "31090"
+
+  # NRC test with metadata in header. 
+  # Required if NRC value: nrcConfig.authentication.enabled=True
+  # otherwise set metadata to None
+NRCTestMetadata: #None
+  x-nuance-client-id: ""
+  audiofileid: "12346"
+
+
+  # NRC QA Apache server for test resource (uri, grammar...)
+NRCTestResURL: 'http://192.168.9.18/nrc_res1/tests/'      # for case that verify grammar fetch via http, mtl-nr11mw-vm61
+NRCTestResURLSecure: 'https://nrcmwctest.blob.core.windows.net/ctest/' # for cases that verify grammar fetch via https
+
+
+  # NRC QA audio test params
+NRCAudioPath: '/QA/NRC_Test/Framework/nrctest/audio/'
+NRCAudioBufms: 30
+NRCAudioXrate: 1.0
+
+  # NRC QA test robust re-try params:
+NRCTestRetryNum: 1
+NRCTestRetryWaitSec: 5
+
+  # NRC QA test logging params, 0 - warning (regression/load), 1 -  info (regressiion), 2 - debug
+NRCTestLogging: 2
+
+# NRC QA test rerun failed testcase params, Enter the number you wish to retry
+NRCTestRetryFailedTestCases: 5
+#------------------------------------------------
+
