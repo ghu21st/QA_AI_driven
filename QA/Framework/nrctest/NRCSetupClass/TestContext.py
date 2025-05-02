@@ -40,8 +40,6 @@ class TestContext(object):
             self.media_dir = os.path.join(
                 self.root_dir, 'test', 'audio')
 
-            self._soX_dir = os.path.join(self.root_dir, 'test', 'sox')
-
             # Read and parse the application configuration.
             self.config_file = os.path.join(self.root_dir, 'config', 'testServerConfig.yaml')
             self._config_dir = os.path.join(self.root_dir, 'config')
@@ -56,19 +54,12 @@ class TestContext(object):
         if not TestContext.instance:
             TestContext.instance = TestContext.__TestContext()
 
-    def __getattr__(self, name):
-        """ Get the attribute value of the singleton. """
-        return getattr(self.instance, name)
-
-    def __setattr__(self, name, value):
-        """ Set the attribute value of the singleton. """
-        return setattr(self.instance, name, value)
-
     @classmethod
     def flush(cls):
         """ Dispose of the current context. Get a new one. """
         cls.instance = TestContext.__TestContext()
 
+'''
     @property
     def config_dir(self):
         return self._config_dir
@@ -76,3 +67,12 @@ class TestContext(object):
     @property
     def soX_dir(self):
         return self._soX_dir
+
+    def __getattr__(self, name):
+        """ Get the attribute value of the singleton. """
+        return getattr(self.instance, name)
+
+    def __setattr__(self, name, value):
+        """ Set the attribute value of the singleton. """
+        return setattr(self.instance, name, value)
+'''
