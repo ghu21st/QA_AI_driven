@@ -1,7 +1,7 @@
 #!python
 # encoding: utf-8
 """
-Common Python test utility for different QA projects like: Transcriber Service, Krypton, NLPS, NRM, NRC
+Common Python test utility for different QA projects like: NLPS, NRM, NRC
 
 """
 
