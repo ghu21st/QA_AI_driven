@@ -3,7 +3,6 @@
 """
 Common Python test utility for different QA projects like: Transcriber Service, Krypton, NLPS, NRM, NRC
 
-@author: Geoff Rowell; Modification/updates: Marc Yang, Gang Hu (NLPS/NRM/NRC)
 """
 
 import sys
